@@ -89,20 +89,18 @@
         ["recruitment", "[rɪˈkruːtmənt]", "набор (наем)"],
         //
         //
-        [
-            ["specification", "[ˌspɛsɪfɪˈkeɪʃn]", "тех. поддержка"],
-            ["loan", "[loʊn]", "ссуда"],
-            ["customer", "[ˈkʌstəmər]", "потребитель"],
-            ["satisfaction", "[ˌsætɪsˈfækʃn]", "удовлетворение"],
-            ["survey", "[sɜːrˈveɪ]", "опрос"],
-            ["promotion", "[prəˈmoʊʃn]", "продвижение"],
-            ["stock (management)", "[stɒk]", "управление товарами"],
-            ["quantity", "[ˈkwɒntəti]", "кол-во"],
-            ["report", "[rɪˈpɔːrt]", "отчет"],
-            ["purchasing needs", "[ˈpɜːrtʃəsɪŋ niːdz]", "снабжение"],
-            ["convenience", "[kənˈviːniəns]", "удобство"],
-            ["pet peeve", "[pɛt pɪv]", "раздражающая привычка"],
-        ],
+        ["specification", "[ˌspɛsɪfɪˈkeɪʃn]", "тех. поддержка"],
+        ["loan", "[loʊn]", "ссуда"],
+        ["customer", "[ˈkʌstəmər]", "потребитель"],
+        ["satisfaction", "[ˌsætɪsˈfækʃn]", "удовлетворение"],
+        ["survey", "[sɜːrˈveɪ]", "опрос"],
+        ["promotion", "[prəˈmoʊʃn]", "продвижение"],
+        ["stock (management)", "[stɒk]", "управление товарами"],
+        ["quantity", "[ˈkwɒntəti]", "кол-во"],
+        ["report", "[rɪˈpɔːrt]", "отчет"],
+        ["purchasing needs", "[ˈpɜːrtʃəsɪŋ niːdz]", "снабжение"],
+        ["convenience", "[kənˈviːniəns]", "удобство"],
+        ["pet peeve", "[pɛt pɪv]", "раздражающая привычка"],
     ];
 
     let choise: string[] = getRandomWords();
