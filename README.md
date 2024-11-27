@@ -36,3 +36,19 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+```bash
+git log --oneline
+
+git log --graph
+
+git log --author="username"
+
+git log --since="2023-01-01" --until="2023-12-31"
+
+git log -- path/to/file
+
+git log --oneline --graph
+
+git log --since="1 week ago"
+```

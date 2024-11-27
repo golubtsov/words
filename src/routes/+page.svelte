@@ -106,6 +106,7 @@
     let choise: string[] = getRandomWords();
     let isStarting: boolean = false;
     let result: string = "";
+    let showBlockWithResult: boolean = false;
 
     function start() {
         if (!isStarting) {
@@ -121,13 +122,11 @@
     }
 
     function check() {
-        if (result === choise[0]) {
-            alert("Good!");
-        } else {
-            alert(
-                `You have the error\n Right - ${choise[0]}\n Wrong - ${result}`,
-            );
-        }
+        showBlockWithResult = true;
+    }
+
+    function continueTrain() {
+        showBlockWithResult = false;
         start();
     }
 
@@ -136,14 +135,16 @@
     }
 </script>
 
-<section class="flex flex-1 my-36 justify-center items-center w-full">
+<section
+    class="flex flex-1 justify-center items-center w-full dark:bg-gray-800 h-screen"
+>
     <section
-        class="flex border-2 shadow-2xl rounded-2xl justify-center items-center p-5 min-h-[200px] min-w-[550px] mx-5"
+        class="flex border-2 shadow-2xl rounded-2xl justify-center items-center p-5 min-h-[200px] min-w-[550px] mx-5 bg-white dark:bg-gray-800"
     >
         {#if words.length === 0 && !isStarting}
             <div class="flex w-full m-auto p-2">
                 <button
-                    class="flex m-auto py-1 border-2 text-2xl rounded-2xl px-4"
+                    class="flex m-auto py-1 border-2 text-2xl rounded-2xl px-4 text-black dark:text-white bg-white dark:bg-gray-700"
                     on:click={() => start()}
                 >
                     words
@@ -153,11 +154,15 @@
 
         {#if words.length !== 0}
             <div class="block m-auto w-full">
-                <div class="block w-full text-center text-2xl">
+                <div
+                    class="block w-full text-center text-2xl text-black dark:text-white"
+                >
                     <p>{choise[2]}</p>
                 </div>
 
-                <div class="block w-full text-center text-2xl">
+                <div
+                    class="block w-full text-center text-2xl text-black dark:text-white"
+                >
                     <p>{choise[1]}</p>
                 </div>
 
@@ -166,19 +171,46 @@
                         <input
                             autofocus
                             type="text"
-                            class="input border-2 border-gray-200 w-full p-3 rounded-lg"
+                            class="input border-2 border-gray-200 dark:border-gray-600 w-full p-3 rounded-lg bg-white dark:bg-gray-700 text-black dark:text-white"
                             placeholder="Word"
                             bind:value={result}
                         />
                     </div>
                 </div>
 
+                {#if showBlockWithResult}
+                    <div class="mt-4">
+                        <div>
+                            <p class="text-green-500">{choise[0]}</p>
+                        </div>
+                    </div>
+
+                    {#if result !== choise[0]}
+                        <div class="mt-4">
+                            <div>
+                                <p class="text-red-500">
+                                    {#if result === ""}
+                                        {choise[0]}
+                                    {:else}
+                                        {result}
+                                    {/if}
+                                </p>
+                            </div>
+                        </div>
+                    {/if}
+                {/if}
+
                 <div class="block w-full mt-4">
                     <button
-                        on:click={check}
-                        class="btn flex m-auto rounded-2xl border-2 py-3 px-8 border-gray-200"
+                        on:click={() =>
+                            showBlockWithResult ? continueTrain() : check()}
+                        class="btn flex m-auto rounded-2xl border-2 py-3 px-8 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white"
                     >
-                        Check
+                        {#if showBlockWithResult}
+                            Continue
+                        {:else}
+                            Check
+                        {/if}
                     </button>
                 </div>
             </div>
