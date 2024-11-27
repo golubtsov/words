@@ -169,7 +169,6 @@
                 <div class="mt-4">
                     <div>
                         <input
-                            autofocus
                             type="text"
                             class="input border-2 border-gray-200 dark:border-gray-600 w-full p-3 rounded-lg bg-white dark:bg-gray-700 text-black dark:text-white"
                             placeholder="Word"
