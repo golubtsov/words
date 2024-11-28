@@ -1,7 +1,7 @@
 <script lang="ts">
     import "../app.css";
 
-    const words = [
+    const words: string[][] = [
         ["borrow", "[ˈbɒrəʊ]", "занимать"],
         ["lend", "[lend]", "одолживать"],
         ["purpose", "[ˈpɜːrpəs]", "предназначение"],
@@ -103,10 +103,15 @@
         ["pet peeve", "[pɛt pɪv]", "раздражающая привычка"],
     ];
 
+    const usedWords: string[][] = [];
+
+    let wordIndex: number | null = null;
     let choise: string[] = getRandomWords();
     let isStarting: boolean = false;
     let result: string = "";
     let showBlockWithResult: boolean = false;
+    let wordsLength = words.length;
+    let usedWordsLength = usedWords.length;
 
     function start() {
         if (!isStarting) {
@@ -117,8 +122,8 @@
     }
 
     function getRandomWords() {
-        let n = Math.floor(Math.random() * (words.length + 1));
-        return words[n];
+        wordIndex = Math.floor(Math.random() * (words.length + 1));
+        return words[wordIndex];
     }
 
     function check() {
@@ -127,7 +132,22 @@
 
     function continueTrain() {
         showBlockWithResult = false;
+        updateArrayWithWords();
         start();
+    }
+
+    function updateArrayWithWords() {
+        if (wordIndex) {
+            usedWords.push(choise);
+            words.splice(wordIndex, 1);
+
+            wordsLength = words.length;
+            usedWordsLength = usedWords.length;
+        } else if (wordIndex === 0) {
+            alert("Слова закончились");
+        } else {
+            alert("You have problems in the code.");
+        }
     }
 
     function clearAll() {
@@ -136,83 +156,80 @@
 </script>
 
 <section
-    class="flex flex-1 justify-center items-center w-full dark:bg-gray-800 h-screen"
+    class="flex flex-col gap-y-5 justify-center items-center w-full dark:bg-gray-800 h-screen"
 >
-    <section
-        class="flex border-2 shadow-2xl rounded-2xl justify-center items-center p-5 min-h-[200px] min-w-[550px] mx-5 bg-white dark:bg-gray-800"
-    >
-        {#if words.length === 0 && !isStarting}
-            <div class="flex w-full m-auto p-2">
-                <button
-                    class="flex m-auto py-1 border-2 text-2xl rounded-2xl px-4 text-black dark:text-white bg-white dark:bg-gray-700"
-                    on:click={() => start()}
-                >
-                    words
-                </button>
-            </div>
-        {/if}
-
-        {#if words.length !== 0}
-            <div class="block m-auto w-full">
-                <div
-                    class="block w-full text-center text-2xl text-black dark:text-white"
-                >
-                    <p>{choise[2]}</p>
-                </div>
-
-                <div
-                    class="block w-full text-center text-2xl text-black dark:text-white"
-                >
-                    <p>{choise[1]}</p>
-                </div>
-
-                <div class="mt-4">
-                    <div>
-                        <input
-                            type="text"
-                            class="input border-2 border-gray-200 dark:border-gray-600 w-full p-3 rounded-lg bg-white dark:bg-gray-700 text-black dark:text-white"
-                            placeholder="Word"
-                            bind:value={result}
-                        />
+    <section class="-mt-52">
+        <section
+            class="flex flex-col min-w-0 text-white sm:min-w-[550px] gap-y-3 mb-4"
+        >
+            <div>Всего: {wordsLength}</div>
+            <div>Пройдено: {usedWordsLength}</div>
+        </section>
+        <section
+            class="flex border-2 shadow-2xl rounded-2xl justify-center items-center p-5 min-h-[200px] min-w-0 sm:min-w-[550px] mx-2 bg-white dark:bg-gray-800"
+        >
+            {#if words.length !== 0}
+                <div class="block m-auto w-full">
+                    <div
+                        class="block w-full text-center text-2xl text-black dark:text-white"
+                    >
+                        <p>{choise[2]}</p>
                     </div>
-                </div>
 
-                {#if showBlockWithResult}
+                    <div
+                        class="block w-full text-center text-2xl text-black dark:text-white"
+                    >
+                        <p>{choise[1]}</p>
+                    </div>
+
                     <div class="mt-4">
                         <div>
-                            <p class="text-green-500">{choise[0]}</p>
+                            <input
+                                type="text"
+                                class="input border-2 border-gray-200 dark:border-gray-600 w-full p-3 rounded-lg bg-white dark:bg-gray-700 text-black dark:text-white"
+                                placeholder="Word"
+                                bind:value={result}
+                            />
                         </div>
                     </div>
 
-                    {#if result !== choise[0]}
+                    {#if showBlockWithResult}
                         <div class="mt-4">
                             <div>
-                                <p class="text-red-500">
-                                    {#if result === ""}
-                                        {choise[0]}
-                                    {:else}
-                                        {result}
-                                    {/if}
-                                </p>
+                                <p class="text-green-500">{choise[0]}</p>
                             </div>
                         </div>
-                    {/if}
-                {/if}
 
-                <div class="block w-full mt-4">
-                    <button
-                        on:click={() =>
-                            showBlockWithResult ? continueTrain() : check()}
-                        class="btn flex m-auto rounded-2xl border-2 py-3 px-8 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white"
-                    >
-                        {#if showBlockWithResult}
-                            Continue
-                        {:else}
-                            Check
+                        {#if result !== choise[0]}
+                            <div class="mt-4">
+                                <div>
+                                    <p class="text-red-500">
+                                        {#if result === ""}
+                                            {choise[0]}
+                                        {:else}
+                                            {result}
+                                        {/if}
+                                    </p>
+                                </div>
+                            </div>
                         {/if}
-                    </button>
+                    {/if}
+
+                    <div class="block w-full mt-4">
+                        <button
+                            on:click={() =>
+                                showBlockWithResult ? continueTrain() : check()}
+                            class="btn flex m-auto rounded-2xl border-2 py-3 px-8 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white"
+                        >
+                            {#if showBlockWithResult}
+                                Continue
+                            {:else}
+                                Check
+                            {/if}
+                        </button>
+                    </div>
                 </div>
-            </div>
-        {/if}
+            {/if}
+        </section>
     </section>
 </section>
